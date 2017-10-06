@@ -210,7 +210,7 @@
 		  </p>
 
           <p>
-			The first step in rasa-core is to create <code>domain.yml</code> file, for our bot domain file will look like this,
+			The first step in rasa-core is to create <code>domain.yml</code> file, for our bot, domain file is <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/pss_domain.yml">here</a>,
 		  </p>
 
           <p>
@@ -238,8 +238,8 @@
 			Next comes <code>policies.py</code>,
 			<p class="lead">
 			Policies are model or a simple implementation for selecting what is the best action to take given intent, entity, slots.<br /><br />
-			Here I have implemented Keras policy, keras is provided inbuilt as library in rasa-core, hence easier to use. There is not much effort put in this policy because predicting action in this implementation of bot is straight forward. In case there is complex requirement then this policy can be extended to use complex models.
 			</p>
+			Here I have implemented Keras policy, keras is provided inbuilt as library in rasa-core, hence easier to use. There is not much effort put in this policy because predicting action in this implementation of bot is straight forward. In case there is complex requirement then this policy can be extended to use complex models.
 		  </p>
 
           <p>
@@ -249,21 +249,21 @@
 		  </p>
 
 		  <p>
-			Implementation of stories.md can be found <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/data/stories.md">here</a>.<br />
-			<br />
+			Implementation of stories.md can be found <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/data/stories.md">here</a>.
+			<p>
 			Once all these are ready, its now time to <b>train</b>.<br />
-			<br />
+			</p>
+			<p>
 			To train, we create an agent object.
 			<p class="lead">Agent brings interpreter, policy and domain together.</p>
 			For training we don't need interpreter, only stories and domain file is needed.<br /><br />
-			Training agent code is defined <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/train_init.py">here</a>.<br /><br />
-
+			Training agent code is defined <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/train_init.py">here</a>.
+			</p>
 			Once the training is complete, a folder is created within models.<br />
 			<p>
 			We create another <b>agent</b> instance to use intrepreter and the model and run the bot via terminal. Code for this is <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/run.py">here</a>.<br />
 			</p>
 		   </p>
-			
 		  <p>
 			<p>Output from above bot implementation</p>
 			<p><code>
