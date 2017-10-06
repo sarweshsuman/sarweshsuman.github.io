@@ -80,7 +80,8 @@
 
           <p>Rasa is an opensource framework which enables one to build chatbot in their own environment with minimal effort. You can learn more about rasa <a href="https://rasa.ai/">here</a>.</p>
 
-          <p>My Github repo for <a href="https://github.com/sarweshsuman/chatbot-codes-collection/tree/master/rasa-nlu">rasa-nlu</a> and <a href="https://github.com/sarweshsuman/chatbot-codes-collection/tree/master/rasa-core">rasa-core</a>.
+          <p><p>My Github repo for <a href="https://github.com/sarweshsuman/chatbot-codes-collection/tree/master/rasa-nlu">rasa-nlu</a> and <a href="https://github.com/sarweshsuman/chatbot-codes-collection/tree/master/rasa-core">rasa-core</a>.
+		  </p>
 		  <b>As of writing this blog, rasa-core is in early access mode and access can be requested via rasa website.</b></p>
 
           <p>In this blog we will create a bot which is able to get product information based on name and version of the software, product information could be hardware related or feature related. Bot will fetch these info from postgres database. Bot can also deploy a software to tomcat if asked.</p>
@@ -89,7 +90,7 @@
 		  <p class="lead">sudo pip install rasa_nlu</p>
 		  </p>
 
-          <p>Rasa NLU comes with following implementations of models internally,
+          <p>Rasa NLU comes with following implementations of models,
 		  <ul>
 			<li>spaCy + sklearn</li>
 			<li>MITIE</li>
@@ -100,12 +101,15 @@
           <p>We will be using spaCy_sklearn for NLU. Read more about spaCy <a href="https://spacy.io/">here</a> and about sklearn <a href="http://scikit-learn.org/">here</a>.</p>
 
           <p>We start by creating configuration file that tells the rasa nlu framework which model we want to use, what is the path to store the model created and where to find the training dataset.
+		  <code>
 			file name: "config_spacy.json"
 			{
 			  "pipeline": "spacy_sklearn",
 			  "path" : "./models",
 			  "data" : "./data/sample-dataset.json"
-			}</p>
+			}
+		  </code>
+		  </p>
 
           <p>Next, we need to prepare the dataset. Dataset format accepted by rasa-nlu framework is as follows,
 			{
