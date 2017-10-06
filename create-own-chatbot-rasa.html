@@ -41,7 +41,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="https://www.linkedin.com/in/sarwesh-suman-a7981220">Linkedin</a>
+              <a class="nav-link" href="https://www.linkedin.com/in/sarwesh-suman-a7981220" target="_blank">Linkedin</a>
             </li>
           </ul>
         </div>
@@ -62,7 +62,7 @@
           <!-- Author -->
           <p class="lead">
             by
-            <a href="https://www.linkedin.com/in/sarwesh-suman-a7981220">Sarwesh Suman</a>
+            <a href="https://www.linkedin.com/in/sarwesh-suman-a7981220" target="_blank">Sarwesh Suman</a>
           </p>
 
           <hr>
@@ -78,16 +78,16 @@
           <hr>
 
           <!-- Post Content -->
-          <p class="lead">Chatbots are computer programs that we interact with via text or voice interface. Today's chatbot are more intelligent with use of AI models in the backend. You can read more <a href="https://sarweshsuman.github.io/chatbot-revolution.html">here</a>.</p>
+          <p class="lead">Chatbots are computer programs that we interact with via text or voice interface. Today's chatbot are more intelligent with use of AI models in the backend. You can read more <a href="https://sarweshsuman.github.io/chatbot-revolution.html" target="_blank">here</a>.</p>
 
           <p>A basic chatbot architecture consists of two main components, nlu and a response system.</p>
 		  <img class="img-fluid rounded" src="chatbot-architecture.JPG" alt="">
 
           <p>In this blog we will look to build terminal based chatbot real quick using rasa framework.</p>
 
-          <p>Rasa is an opensource framework which enables one to build chatbot in their own environment with minimal effort. You can learn more about rasa <a href="https://rasa.ai/">here</a>.</p>
+          <p>Rasa is an opensource framework which enables one to build chatbot in their own environment with minimal effort. You can learn more about rasa <a href="https://rasa.ai/" target="_blank">here</a>.</p>
 
-          <p><p>My Github repo for <a href="https://github.com/sarweshsuman/chatbot-codes-collection/tree/master/rasa-nlu">rasa-nlu</a> and <a href="https://github.com/sarweshsuman/chatbot-codes-collection/tree/master/rasa-core">rasa-core</a>.
+          <p><p>My Github repo for <a href="https://github.com/sarweshsuman/chatbot-codes-collection/tree/master/rasa-nlu" target="_blank">rasa-nlu</a> and <a href="https://github.com/sarweshsuman/chatbot-codes-collection/tree/master/rasa-core" target="_blank">rasa-core</a>.
 		  </p>
 		  <b>As of writing this blog, rasa-core is in early access mode and access can be requested via rasa website.</b></p>
 
@@ -105,7 +105,7 @@
 		  </ul>
  		  </p>
 
-          <p>We will be using spaCy_sklearn for NLU. Read more about spaCy <a href="https://spacy.io/">here</a> and about sklearn <a href="http://scikit-learn.org/">here</a>.</p>
+          <p>We will be using spaCy_sklearn for NLU. Read more about spaCy <a href="https://spacy.io/" target="_blank">here</a> and about sklearn <a href="http://scikit-learn.org/" target="_blank">here</a>.</p>
 
           <p><p>We start by creating configuration file that tells the rasa nlu framework which model we want to use, what is the path to store the model created and where to find the training dataset.</p>
 		  <code>
@@ -210,7 +210,7 @@
 		  </p>
 
           <p>
-			The first step in rasa-core is to create <code>domain.yml</code> file, for our bot, domain file is <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/pss_domain.yml">here</a>,
+			The first step in rasa-core is to create <code>domain.yml</code> file, for our bot, domain file is <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/pss_domain.yml" target="_blank">here</a>,
 		  </p>
 
           <p>
@@ -224,7 +224,7 @@
 		  </p>
 		  
           <p><p>
-			Now it is time to prepare actions.py file, you can refer to code <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/actions.py">here</a>
+			Now it is time to prepare actions.py file, you can refer to code <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/actions.py" target="_blank">here</a>
 			In the actions.py file I have hardcoded feature and hardware part but it can easily be extended to retreive this information from any external service. </p>
 			<code>actions.py</code> implements following 
 			<ul>
@@ -237,8 +237,7 @@
           <p>
 			Next comes <code>policies.py</code>,
 			<p class="lead">
-			Policies are model or a simple implementation for selecting what is the best action to take given intent, entity, slots.<br /><br />
-			</p>
+			Policies are model or a simple implementation for selecting what is the best action to take given intent, entity, slots.</p>
 			Here I have implemented Keras policy, keras is provided inbuilt as library in rasa-core, hence easier to use. There is not much effort put in this policy because predicting action in this implementation of bot is straight forward. In case there is complex requirement then this policy can be extended to use complex models.
 		  </p>
 
@@ -249,7 +248,7 @@
 		  </p>
 
 		  <p>
-			Implementation of stories.md can be found <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/data/stories.md">here</a>.
+			Implementation of stories.md can be found <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/data/stories.md" target="_blank" >here</a>.
 			<p>
 			Once all these are ready, its now time to <b>train</b>.<br />
 			</p>
@@ -257,15 +256,17 @@
 			To train, we create an agent object.
 			<p class="lead">Agent brings interpreter, policy and domain together.</p>
 			For training we don't need interpreter, only stories and domain file is needed.<br /><br />
-			Training agent code is defined <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/train_init.py">here</a>.
+			Training agent code is defined <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/train_init.py" target="_blank">here</a>.
 			</p>
-			Once the training is complete, a folder is created within models.<br />
 			<p>
-			We create another <b>agent</b> instance to use intrepreter and the model and run the bot via terminal. Code for this is <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/run.py">here</a>.<br />
+			Once the training is complete, a folder is created within models.<br />
+			</p>
+			<p>
+			We create another <b>agent</b> instance to use intrepreter and the model and run the bot via terminal. Code for this is <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/run.py" target="_blank">here</a>.<br />
 			</p>
 		   </p>
 		  <p>
-			<p>Output from above bot implementation</p>
+			<p>Output from above bot implementation,</p>
 			<p><code>
 user: hi<br />
 bot : hello there<br />
