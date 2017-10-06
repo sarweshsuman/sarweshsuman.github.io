@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Sarwesh Suman Blog</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/blog-home.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Sarwesh Suman</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="https://sarweshsuman.github.io">Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.linkedin.com/in/sarwesh-suman-a7981220">Linkedin</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-sm-4 col-md-8 col-lg-10">
+
+          <!-- Title -->
+          <h1 class="mt-4">Building Your own Chatbot with Rasa</h1>
+
+          <!-- Author -->
+          <p class="lead">
+            by
+            <a href="https://www.linkedin.com/in/sarwesh-suman-a7981220">Sarwesh Suman</a>
+          </p>
+
+          <hr>
+
+          <!-- Date/Time -->
+          <p>Posted on Oct 06, 2017 at 09:00 AM</p>
+
+          <hr>
+
+          <!-- Preview Image -->
+          <img class="img-fluid rounded" src="create-own-chatbot-rasa.jpg" alt="">
+
+          <hr>
+
+          <!-- Post Content -->
+          <p class="lead">Chatbots are computer programs that we interact with via text or voice interface. Today's chatbot are more intelligent with use of AI models in the backend. You can read more <a href="https://sarweshsuman.github.io/chatbot-revolution.html">here</a>.</p>
+
+          <p>A basic chatbot architecture consists of two main components, nlu and a response system.</p>
+		  <img class="img-fluid rounded" src="chatbot-architecture.JPG" alt="">
+
+          <p>In this blog we will look to build terminal based chatbot real quick using rasa framework.</p>
+
+          <p>Rasa is an opensource framework which enables one to build chatbot in their own environment with minimal effort. You can learn more about rasa <a href="https://rasa.ai/">here</a>.</p>
+
+          <p>My Github repo for <a href="https://github.com/sarweshsuman/chatbot-codes-collection/tree/master/rasa-nlu">rasa-nlu</a> and <a href="https://github.com/sarweshsuman/chatbot-codes-collection/tree/master/rasa-core">rasa-core</a>.
+		  <b>As of writing this blog, rasa-core is in early access mode and access can be requested via rasa website.</b></p>
+
+          <p>In this blog we will create a bot which is able to get product information based on name and version of the software, product information could be hardware related or feature related. Bot will fetch these info from postgres database. Bot can also deploy a software to tomcat if asked.</p>
+
+          <p><p>Install rasa-nlu using below command</p>
+		  <p class="lead">sudo pip install rasa_nlu</p>
+		  </p>
+
+          <p>Rasa NLU comes with following implementations of models internally,
+		  <ul>
+			<li>spaCy + sklearn</li>
+			<li>MITIE</li>
+			<li>sklearn + MITIE</li>
+		  </ul>
+ 		  </p>
+
+          <p>We will be using spaCy_sklearn for NLU. Read more about spaCy <a href="https://spacy.io/">here</a> and about sklearn <a href="http://scikit-learn.org/">here</a>.</p>
+
+          <p>We start by creating configuration file that tells the rasa nlu framework which model we want to use, what is the path to store the model created and where to find the training dataset.
+			file name: "config_spacy.json"
+			{
+			  "pipeline": "spacy_sklearn",
+			  "path" : "./models",
+			  "data" : "./data/sample-dataset.json"
+			}</p>
+
+          <p>Next, we need to prepare the dataset. Dataset format accepted by rasa-nlu framework is as follows,
+			{
+			"text": "what all features are available in awk 6.0?" ,
+			"intent":"product_information",
+			"entities": [
+							{
+									"start":9,
+									"end":17,
+									"value":"feature",
+									"entity":"whatisrequired"
+							},
+							{
+									"start":35,
+									"end":38,
+									"value":"awk",
+									"entity":"software_name"
+
+							},
+							{
+									"start":39,
+									"end":42,
+									"value":"6.0",
+									"entity":"software_version"
+							}
+			]
+			},
+			Here, we have entities {whatisrequired,software_name,software_version} and intent is product_information.
+			</p>
+
+          <p>It is important that we provide enough examples with different variations of the statements so that model is able to generalize well. Incase we dont have enough examples of real data, then we can create data with dummy data, like resturant name,locations can be dummy.</p>
+
+          <p>Once we have acceptable amount of training data it is time to train.
+			Training the model with below command,
+			python -m rasa_nlu.train -c ./config_spacy.json
+			</p>
+
+          <p>
+			While the model is being trained, you will see outputs similar to these,
+
+			INFO:rasa_nlu.utils.spacy_utils:Trying to load spacy model with name 'en'
+			INFO:rasa_nlu.components:Added 'nlp_spacy' to component cache. Key 'nlp_spacy-en'.
+			INFO:rasa_nlu.converters:Training data format at ./data/demo-rasa.json is rasa_nlu
+			INFO:rasa_nlu.training_data:Training data stats:
+					- intent examples: 42 (4 distinct intents)
+					- found intents: 'affirm', 'goodbye', 'greet', 'restaurant_search'
+					- entity examples: 11 (2 distinct entities)
+					- found entities: 'cuisine', 'location'
+
+			INFO:rasa_nlu.model:Starting to train component nlp_spacy
+			INFO:rasa_nlu.model:Finished training component.
+			INFO:rasa_nlu.model:Starting to train component tokenizer_spacy
+			INFO:rasa_nlu.model:Finished training component.
+			INFO:rasa_nlu.model:Starting to train component intent_featurizer_spacy
+			INFO:rasa_nlu.model:Finished training component.
+			INFO:rasa_nlu.model:Starting to train component intent_entity_featurizer_regex
+			INFO:rasa_nlu.model:Finished training component.
+			INFO:rasa_nlu.model:Starting to train component ner_crf
+			INFO:rasa_nlu.model:Finished training component.
+			INFO:rasa_nlu.model:Starting to train component ner_synonyms
+			INFO:rasa_nlu.model:Finished training component.
+			INFO:rasa_nlu.model:Starting to train component intent_classifier_sklearn
+			Fitting 2 folds for each of 6 candidates, totalling 12 fits
+			[Parallel(n_jobs=1)]: Done  12 out of  12 | elapsed:    0.1s finished
+
+			Here you can see that it has picked up the intents and entity correctly and summarizes all the details before starting with the training process.
+		   </p>
+
+          <p>
+			Thats it!, our NLU model is trained, a new directory is created under models folder.
+
+			Now, we need to prepare the response generation part. 
+			In a simple chatbot implementating a simple response generation system can be lookup against intent and entity in a database, but we want to put some kind of intelligence to it so we will use rasa-core. 
+		   </p>
+
+          <p>
+			Rasa-core provides intelligence by using machine learning model for predicting next action to take based on intent, entity and past ongoing conversation. Rasa-core serialises these into tracker object and passes it as features to the model to predict next action. Ofcourse before model could predict correctly we train it with dataset.
+		  </p>
+
+          <p>
+			Once you have the access to rasa-core github, start by installing rasa-core with below command,
+			git clone https://github.com/RasaHQ/rasa_dm.git
+			cd rasa_dm
+			pip install -r requirements.txt
+			pip install -e .
+		  </p>
+
+          <p>
+			The first step in rasa-core is to create domain.yml file, for our bot domain file will look like this,
+		  </p>
+
+          <p>
+			Domain file defines what bot consists of, and what it needs to do and the environment around it. It is needed while training and prediction.
+
+			Slots are for storing information that’s relevant over multiple turns of conversation.
+			Intents and Entities will be extracted by rasa-nlu and passed to rasa-core.
+			Templates define static messages against actions.
+			Actions are basically classes that we define and we can implement any logic within them.
+		  </p>
+		  
+          <p>
+			Now it is time to prepare actions file, you can refer to code here
+			In the actions file i have hardcoded feature and hardware part but it can easily be extended to retreive this information from any external service. 
+			actions implements following 
+			<ul>
+			<li>deployment to tomcat</li>
+			<li>fetching feautres and hardware requirements</li>
+			<li>saves entities to slots</li>
+			</ul>
+		  </p>
+
+          <p>
+			Next comes policies,
+			Policies are model or a simple implementation for selecting what is the best action to take given intent, entity, slots.
+		  </p>
+
+          <p>
+			Here I have implemented Keras policy, keras is provided inbuilt as library in rasa-core, hence easier to use. There is not much effort put in this policy because predicting action in this implementation of bot is straight forward. In case there is complex requirement then this policy can be extended to use complex models.
+		  </p>
+
+          <p>
+			Now we have domain.yml,actions.py,policy.py ready. 
+			Next up is preparing stories,
+			Stories are used to create conversational dialogs or flows that is expected by bot. It is used to train policy model.
+		  </p>
+
+		  <p>
+			Our implementation of stories.md can be found here.
+
+			Once all these are ready, its now time to train.
+
+			To train, we create an agent object. Agent brings interpreter, policy and domain together. 
+			For training we dont need interpreter, only stories and domain file is needed.
+			Training agent code is defined here.
+
+			Once the training is complete, a folder is created within models.
+
+			We create another agent instance to now use intrepreter and the model created to run the bot via terminal. Code for this is here.		  
+		   </p>
+		  
+          <hr>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+
+   </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Sarwesh Suman 2017</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+  </body>
+
+</html>
