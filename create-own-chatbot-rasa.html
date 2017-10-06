@@ -195,7 +195,7 @@
 		   </p>
 
           <p>
-			Rasa-core provides intelligence by using machine learning model for predicting next action to take based on intent, entity and past ongoing conversation. Rasa-core serialises these into tracker object and passes it as features to the model to predict next action. Ofcourse before model could predict, we need to train it with dataset.
+			<b>Rasa-core</b> provides intelligence by using machine learning model for predicting next action to take based on intent, entity and past ongoing conversation. Rasa-core serialises these into tracker object and passes it as features to the model to predict next action. Ofcourse before model could predict, we need to train it with dataset.
 		  </p>
 
           <p>
@@ -222,10 +222,10 @@
 		   </ul>
 		  </p>
 		  
-          <p>
-			Now it is time to prepare actions file, you can refer to code <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/actions.py">here</a>
-			In the actions file i have hardcoded feature and hardware part but it can easily be extended to retreive this information from any external service. 
-			actions implements following 
+          <p><p>
+			Now it is time to prepare actions.py file, you can refer to code <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/actions.py">here</a>
+			In the actions.py file I have hardcoded feature and hardware part but it can easily be extended to retreive this information from any external service. </p>
+			<code>actions.py</code> implements following 
 			<ul>
 			<li>deployment to tomcat</li>
 			<li>fetching feautres and hardware requirements</li>
@@ -234,31 +234,67 @@
 		  </p>
 
           <p>
-			Next comes policies,<br />	
-			Policies are model or a simple implementation for selecting what is the best action to take given intent, entity, slots.<br />
+			Next comes <code>policies.py</code>,
+			<p class="lead">
+			Policies are model or a simple implementation for selecting what is the best action to take given intent, entity, slots.<br /><br />
 			Here I have implemented Keras policy, keras is provided inbuilt as library in rasa-core, hence easier to use. There is not much effort put in this policy because predicting action in this implementation of bot is straight forward. In case there is complex requirement then this policy can be extended to use complex models.
+			</p>
 		  </p>
 
           <p>
 			Now we have <code>domain.yml,actions.py,policy.py</code> ready. <br />
 			Next up is preparing stories,<br />
-			Stories are used to create conversational dialogs or flows that is expected by bot. It is used to train policy model.
+			<p class="lead">Stories are used to create conversational dialogs or flows that is expected by bot. It is used to train policy model.</p>
 		  </p>
 
 		  <p>
-			Our implementation of stories.md can be found <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/data/stories.md">here</a>.<br />
-<br />
-			Once all these are ready, its now time to train.<br />
-<br />
-			To train, we create an agent object. Agent brings interpreter, policy and domain together. <br />
-			For training we dont need interpreter, only stories and domain file is needed.<br />
-			Training agent code is defined <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/train_init.py">here</a>.<br />
+			Implementation of stories.md can be found <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/data/stories.md">here</a>.<br />
+			<br />
+			Once all these are ready, its now time to <b>train</b>.<br />
+			<br />
+			To train, we create an agent object.
+			<p class="lead">Agent brings interpreter, policy and domain together.</p>
+			For training we don't need interpreter, only stories and domain file is needed.<br /><br />
+			Training agent code is defined <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/train_init.py">here</a>.<br /><br />
 
 			Once the training is complete, a folder is created within models.<br />
-
-			We create another agent instance to now use intrepreter and the model created to run the bot via terminal. Code for this is <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/run.py">here</a>.<br />
+			<p>
+			We create another <b>agent</b> instance to use intrepreter and the model and run the bot via terminal. Code for this is <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/run.py">here</a>.<br />
+			</p>
 		   </p>
-		  
+			
+		  <p>
+			<p>Output from above bot implementation</p>
+			<p><code>
+user: hi<br />
+bot : hello there<br />
+user: hat are the features of WatsonSearch<br />
+bot : what is the software version?<br />
+user: .0.1<br />
+bot : feature for software WatsonSearch version 0.0.1 is DUMMY VARIABLE 1 DUMMY VARIABLE 2<br />
+user: an you deploy it please?<br />
+bot : what is the source_location?<br />
+user: home/cdpai/software_to_deploy<br />
+bot : what is the destination_location?<br />
+user: tomcat<br />
+bot : Missing configuration in 'software' table, no row in software table with name WatsonSearch and version 0.0.1<br />
+bot : There are no configurations defined, will try to deploy with information we have<br />
+**LOG TRUNCATED**<br />
+bot : WatsonSearch/search/vendor.tomcat.bundle.js.gz<br />
+Using CATALINA_BASE:   /home/cdpai/tomcat/apache-tomcat-8.5.20<br />
+Using CATALINA_HOME:   /home/cdpai/tomcat/apache-tomcat-8.5.20<br />
+Using CATALINA_TMPDIR: /home/cdpai/tomcat/apache-tomcat-8.5.20/temp<br />
+Using JRE_HOME:        /usr<br />
+Using CLASSPATH:       /home/cdpai/tomcat/apache-tomcat-8.5.20/bin/bootstrap.jar:/home/cdpai/tomcat/apache-tomcat-8.5.20/bin/tomcat-juli.jar<br />
+Using CATALINA_BASE:   /home/cdpai/tomcat/apache-tomcat-8.5.20<br />
+Using CATALINA_HOME:   /home/cdpai/tomcat/apache-tomcat-8.5.20<br />
+Using CATALINA_TMPDIR: /home/cdpai/tomcat/apache-tomcat-8.5.20/temp<br />
+Using JRE_HOME:        /usr<br />
+Using CLASSPATH:       /home/cdpai/tomcat/apache-tomcat-8.5.20/bin/bootstrap.jar:/home/cdpai/tomcat/apache-tomcat-8.5.20/bin/tomcat-juli.jar<br />
+Tomcat started.<br />
+bot : Deployment status (True, 'Deployment successful')<br />
+				</code></p>
+		  </p>
           <hr>
 
       </div>
