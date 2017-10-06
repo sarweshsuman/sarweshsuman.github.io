@@ -150,78 +150,80 @@
           <p>It is important that we provide enough examples with different variations of the statements so that model is able to generalize well. Incase we dont have enough examples of real data, then we can create data with dummy data, like resturant name,locations can be dummy.</p>
 
           <p><p>Once we have acceptable amount of training data it is time to train.</p>
-		    Training the model with below command,
+		    <p>Training the model with below command,</p>
 			<code>python -m rasa_nlu.train -c ./config_spacy.json</code>
 		  </p>
 
           <p>
 			<p>While the model is being trained, you will see outputs similar to these,</p>
 			<code>
-			INFO:rasa_nlu.utils.spacy_utils:Trying to load spacy model with name 'en'
-			INFO:rasa_nlu.components:Added 'nlp_spacy' to component cache. Key 'nlp_spacy-en'.
-			INFO:rasa_nlu.converters:Training data format at ./data/demo-rasa.json is rasa_nlu
-			INFO:rasa_nlu.training_data:Training data stats:
-					- intent examples: 42 (4 distinct intents)
-					- found intents: 'affirm', 'goodbye', 'greet', 'restaurant_search'
-					- entity examples: 11 (2 distinct entities)
-					- found entities: 'cuisine', 'location'
-
-			INFO:rasa_nlu.model:Starting to train component nlp_spacy
-			INFO:rasa_nlu.model:Finished training component.
-			INFO:rasa_nlu.model:Starting to train component tokenizer_spacy
-			INFO:rasa_nlu.model:Finished training component.
-			INFO:rasa_nlu.model:Starting to train component intent_featurizer_spacy
-			INFO:rasa_nlu.model:Finished training component.
-			INFO:rasa_nlu.model:Starting to train component intent_entity_featurizer_regex
-			INFO:rasa_nlu.model:Finished training component.
-			INFO:rasa_nlu.model:Starting to train component ner_crf
-			INFO:rasa_nlu.model:Finished training component.
-			INFO:rasa_nlu.model:Starting to train component ner_synonyms
-			INFO:rasa_nlu.model:Finished training component.
-			INFO:rasa_nlu.model:Starting to train component intent_classifier_sklearn
-			Fitting 2 folds for each of 6 candidates, totalling 12 fits
-			[Parallel(n_jobs=1)]: Done  12 out of  12 | elapsed:    0.1s finished
+			INFO:rasa_nlu.utils.spacy_utils:Trying to load spacy model with name 'en'<br />
+			INFO:rasa_nlu.components:Added 'nlp_spacy' to component cache. Key 'nlp_spacy-en'.<br />
+			INFO:rasa_nlu.converters:Training data format at ./data/demo-rasa.json is rasa_nlu<br />
+			INFO:rasa_nlu.training_data:Training data stats:<br />
+					- intent examples: 42 (4 distinct intents)<br />
+					- found intents: 'affirm', 'goodbye', 'greet', 'restaurant_search'<br />
+					- entity examples: 11 (2 distinct entities)<br />
+					- found entities: 'cuisine', 'location'<br />
+			INFO:rasa_nlu.model:Starting to train component nlp_spacy<br />
+			INFO:rasa_nlu.model:Finished training component.<br />
+			INFO:rasa_nlu.model:Starting to train component tokenizer_spacy<br />
+			INFO:rasa_nlu.model:Finished training component.<br />
+			INFO:rasa_nlu.model:Starting to train component intent_featurizer_spacy<br />
+			INFO:rasa_nlu.model:Finished training component.<br />
+			INFO:rasa_nlu.model:Starting to train component intent_entity_featurizer_regex<br />
+			INFO:rasa_nlu.model:Finished training component.<br />
+			INFO:rasa_nlu.model:Starting to train component ner_crf<br />
+			INFO:rasa_nlu.model:Finished training component.<br />
+			INFO:rasa_nlu.model:Starting to train component ner_synonyms<br />
+			INFO:rasa_nlu.model:Finished training component.<br />
+			INFO:rasa_nlu.model:Starting to train component intent_classifier_sklearn<br />
+			Fitting 2 folds for each of 6 candidates, totalling 12 fits<br />
+			[Parallel(n_jobs=1)]: Done  12 out of  12 | elapsed:    0.1s finished<br />
 			</code>
 			<p>Here you can see that it has picked up the intents and entity correctly and summarizes all the details before starting with the training process.</p>
 		   </p>
 
           <p>
-			<p>Thats it!, our NLU model is trained, a new directory is created under models folder.</p>
+			<p><b>Thats it!, our NLU model is trained</b>, a new directory is created under models folder.</p>
 			<p>
 			Now, we need to prepare the response generation part. <br />
-			In a simple chatbot implementating a simple response generation system can be lookup against intent and entity in a database, but we want to put some kind of intelligence to it so we will use rasa-core. 
+			</p>
+			<p>
+			In a simple chatbot, implementating a response generation system can be a lookup against intent and entity in a database, but we want to put some kind of intelligence to it so we will use rasa-core. 
 			</p>
 		   </p>
 
           <p>
-			Rasa-core provides intelligence by using machine learning model for predicting next action to take based on intent, entity and past ongoing conversation. Rasa-core serialises these into tracker object and passes it as features to the model to predict next action. Ofcourse before model could predict correctly we train it with dataset.
+			Rasa-core provides intelligence by using machine learning model for predicting next action to take based on intent, entity and past ongoing conversation. Rasa-core serialises these into tracker object and passes it as features to the model to predict next action. Ofcourse before model could predict, we need to train it with dataset.
 		  </p>
 
           <p>
 			<p>Once you have the access to rasa-core github, start by installing rasa-core with below command,</p>
 			<code>
-			git clone https://github.com/RasaHQ/rasa_dm.git
-			cd rasa_dm
-			pip install -r requirements.txt
-			pip install -e .
+			git clone https://github.com/RasaHQ/rasa_dm.git<br />
+			cd rasa_dm<br />
+			pip install -r requirements.txt<br />
+			pip install -e .<br />
 			</code>
 		  </p>
 
           <p>
-			The first step in rasa-core is to create domain.yml file, for our bot domain file will look like this,
+			The first step in rasa-core is to create <code>domain.yml</code> file, for our bot domain file will look like this,
 		  </p>
 
           <p>
-			Domain file defines what bot consists of, and what it needs to do and the environment around it. It is needed while training and prediction.
-
-			Slots are for storing information that’s relevant over multiple turns of conversation.
-			Intents and Entities will be extracted by rasa-nlu and passed to rasa-core.
-			Templates define static messages against actions.
-			Actions are basically classes that we define and we can implement any logic within them.
+		   <ul>
+			<li>Domain file defines what bot consists of, and what it needs to do and the environment around it. It is needed while training and prediction.</li>
+			<li>Slots are for storing information that’s relevant over multiple turns of conversation.</li>
+			<li>Intents and Entities will be extracted by rasa-nlu and passed to rasa-core.</li>
+			<li>Templates define static messages against actions.</li>
+			<li>Actions are basically classes that we define and we can implement any logic within them.</li>
+		   </ul>
 		  </p>
 		  
           <p>
-			Now it is time to prepare actions file, you can refer to code here
+			Now it is time to prepare actions file, you can refer to code <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/actions.py">here</a>
 			In the actions file i have hardcoded feature and hardware part but it can easily be extended to retreive this information from any external service. 
 			actions implements following 
 			<ul>
@@ -232,32 +234,29 @@
 		  </p>
 
           <p>
-			Next comes policies,
-			Policies are model or a simple implementation for selecting what is the best action to take given intent, entity, slots.
-		  </p>
-
-          <p>
+			Next comes policies,<br />	
+			Policies are model or a simple implementation for selecting what is the best action to take given intent, entity, slots.<br />
 			Here I have implemented Keras policy, keras is provided inbuilt as library in rasa-core, hence easier to use. There is not much effort put in this policy because predicting action in this implementation of bot is straight forward. In case there is complex requirement then this policy can be extended to use complex models.
 		  </p>
 
           <p>
-			Now we have domain.yml,actions.py,policy.py ready. 
-			Next up is preparing stories,
+			Now we have <code>domain.yml,actions.py,policy.py</code> ready. <br />
+			Next up is preparing stories,<br />
 			Stories are used to create conversational dialogs or flows that is expected by bot. It is used to train policy model.
 		  </p>
 
 		  <p>
-			Our implementation of stories.md can be found here.
+			Our implementation of stories.md can be found <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/data/stories.md">here</a>.<br />
+<br />
+			Once all these are ready, its now time to train.<br />
+<br />
+			To train, we create an agent object. Agent brings interpreter, policy and domain together. <br />
+			For training we dont need interpreter, only stories and domain file is needed.<br />
+			Training agent code is defined <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/train_init.py">here</a>.<br />
 
-			Once all these are ready, its now time to train.
+			Once the training is complete, a folder is created within models.<br />
 
-			To train, we create an agent object. Agent brings interpreter, policy and domain together. 
-			For training we dont need interpreter, only stories and domain file is needed.
-			Training agent code is defined here.
-
-			Once the training is complete, a folder is created within models.
-
-			We create another agent instance to now use intrepreter and the model created to run the bot via terminal. Code for this is here.		  
+			We create another agent instance to now use intrepreter and the model created to run the bot via terminal. Code for this is <a href="https://github.com/sarweshsuman/chatbot-codes-collection/blob/master/rasa-core/run.py">here</a>.<br />
 		   </p>
 		  
           <hr>
