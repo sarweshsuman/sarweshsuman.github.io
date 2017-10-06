@@ -87,7 +87,7 @@
           <p>In this blog we will create a bot which is able to get product information based on name and version of the software, product information could be hardware related or feature related. Bot will fetch these info from postgres database. Bot can also deploy a software to tomcat if asked.</p>
 
           <p><p>Install rasa-nlu using below command</p>
-		  <p class="lead">sudo pip install rasa_nlu</p>
+		  <code>sudo pip install rasa_nlu</code>
 		  </p>
 
           <p>Rasa NLU comes with following implementations of models,
@@ -100,56 +100,57 @@
 
           <p>We will be using spaCy_sklearn for NLU. Read more about spaCy <a href="https://spacy.io/">here</a> and about sklearn <a href="http://scikit-learn.org/">here</a>.</p>
 
-          <p>We start by creating configuration file that tells the rasa nlu framework which model we want to use, what is the path to store the model created and where to find the training dataset.
+          <p><p>We start by creating configuration file that tells the rasa nlu framework which model we want to use, what is the path to store the model created and where to find the training dataset.</p>
 		  <code>
-			file name: "config_spacy.json"
-			{
-			  "pipeline": "spacy_sklearn",
-			  "path" : "./models",
-			  "data" : "./data/sample-dataset.json"
-			}
+			file name: "config_spacy.json"<br />
+			{<br />
+			  "pipeline": "spacy_sklearn",<br />
+			  "path" : "./models",<br />
+			  "data" : "./data/sample-dataset.json"<br />
+			}<br />
 		  </code>
 		  </p>
 
-          <p>Next, we need to prepare the dataset. Dataset format accepted by rasa-nlu framework is as follows,
-			{
-			"text": "what all features are available in awk 6.0?" ,
-			"intent":"product_information",
-			"entities": [
-							{
-									"start":9,
-									"end":17,
-									"value":"feature",
-									"entity":"whatisrequired"
-							},
-							{
-									"start":35,
-									"end":38,
-									"value":"awk",
-									"entity":"software_name"
-
-							},
-							{
-									"start":39,
-									"end":42,
-									"value":"6.0",
-									"entity":"software_version"
-							}
-			]
-			},
-			Here, we have entities {whatisrequired,software_name,software_version} and intent is product_information.
+          <p><p>Next, we need to prepare the dataset. Dataset format accepted by rasa-nlu framework is as follows,</p>
+		  <code>
+			{<br />
+			"text": "what all features are available in awk 6.0?" ,<br />
+			"intent":"product_information",<br />
+			"entities": [<br />
+							{<br />
+									"start":9,<br />
+									"end":17,<br />
+									"value":"feature",<br />
+									"entity":"whatisrequired"<br />
+							},<br />
+							{<br />
+									"start":35,<br />
+									"end":38,<br />
+									"value":"awk",<br />
+									"entity":"software_name"<br />
+							},<br />
+							{<br />
+									"start":39,<br />
+									"end":42,<br />
+									"value":"6.0",<br />
+									"entity":"software_version"<br />
+							}<br />
+			]<br />
+			}<br />
+			</code>
+			<p>Here, we have entities {whatisrequired,software_name,software_version} and intent is product_information.</p>
 			</p>
 
           <p>It is important that we provide enough examples with different variations of the statements so that model is able to generalize well. Incase we dont have enough examples of real data, then we can create data with dummy data, like resturant name,locations can be dummy.</p>
 
-          <p>Once we have acceptable amount of training data it is time to train.
-			Training the model with below command,
-			python -m rasa_nlu.train -c ./config_spacy.json
-			</p>
+          <p><p>Once we have acceptable amount of training data it is time to train.</p>
+		    Training the model with below command,
+			<code>python -m rasa_nlu.train -c ./config_spacy.json</code>
+		  </p>
 
           <p>
-			While the model is being trained, you will see outputs similar to these,
-
+			<p>While the model is being trained, you will see outputs similar to these,</p>
+			<code>
 			INFO:rasa_nlu.utils.spacy_utils:Trying to load spacy model with name 'en'
 			INFO:rasa_nlu.components:Added 'nlp_spacy' to component cache. Key 'nlp_spacy-en'.
 			INFO:rasa_nlu.converters:Training data format at ./data/demo-rasa.json is rasa_nlu
@@ -174,15 +175,16 @@
 			INFO:rasa_nlu.model:Starting to train component intent_classifier_sklearn
 			Fitting 2 folds for each of 6 candidates, totalling 12 fits
 			[Parallel(n_jobs=1)]: Done  12 out of  12 | elapsed:    0.1s finished
-
-			Here you can see that it has picked up the intents and entity correctly and summarizes all the details before starting with the training process.
+			</code>
+			<p>Here you can see that it has picked up the intents and entity correctly and summarizes all the details before starting with the training process.</p>
 		   </p>
 
           <p>
-			Thats it!, our NLU model is trained, a new directory is created under models folder.
-
-			Now, we need to prepare the response generation part. 
+			<p>Thats it!, our NLU model is trained, a new directory is created under models folder.</p>
+			<p>
+			Now, we need to prepare the response generation part. <br />
 			In a simple chatbot implementating a simple response generation system can be lookup against intent and entity in a database, but we want to put some kind of intelligence to it so we will use rasa-core. 
+			</p>
 		   </p>
 
           <p>
@@ -190,11 +192,13 @@
 		  </p>
 
           <p>
-			Once you have the access to rasa-core github, start by installing rasa-core with below command,
+			<p>Once you have the access to rasa-core github, start by installing rasa-core with below command,</p>
+			<code>
 			git clone https://github.com/RasaHQ/rasa_dm.git
 			cd rasa_dm
 			pip install -r requirements.txt
 			pip install -e .
+			</code>
 		  </p>
 
           <p>
